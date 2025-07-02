@@ -9,7 +9,7 @@ cmd(
     filename: __filename,
   },
   async (
-    conn,
+    danuwa,
     mek,
     m,
     {
@@ -67,7 +67,7 @@ cmd(
 🚀 Powered By  ${config.BOT_NAME || '*DANUKA DISANAYAKA* 🔥'}
 `;
 
-      await conn.sendMessage(
+      await danuwa.sendMessage(
         from,
         {
           image: {
