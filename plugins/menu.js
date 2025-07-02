@@ -1,5 +1,4 @@
 const { cmd, commands } = require("../command");
-const config = require("../config");
 
 cmd(
   {
@@ -14,34 +13,10 @@ cmd(
     m,
     {
       from,
-      pushname,
       reply
     }
   ) => {
     try {
-      const categoryEmojis = {
-        main: "📁",
-        owner: "👑",
-        group: "👥",
-        tools: "🛠️",
-        media: "🎞️",
-        download: "📥",
-        fun: "🎮",
-        search: "🔍",
-        other: "❓"
-      };
-
-      let heading = `
-            🌟 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗧𝗢 🌟    
-════════════════════════     
-🔮  Ｄ  Ａ  Ｎ  Ｕ  Ｗ  Ａ  －  Ｍ  Ｄ  🔮  
-
-        ⚙ SYSTEM CORE MENU ⚙
-════════════════════════   
-`;
-
-      let menuText = ``;
-
       const categories = {};
 
       for (let cmdName in commands) {
@@ -54,29 +29,16 @@ cmd(
         });
       }
 
+      let menuText = "📋 *Available Commands:*\n";
+
       for (const [cat, cmds] of Object.entries(categories)) {
-        const emoji = categoryEmojis[cat] || "📂";
-        menuText += `\n${emoji} *${cat.toUpperCase()}*\n─────────────────────────\n`;
+        menuText += `\n📂 *${cat.toUpperCase()}*\n`;
         cmds.forEach(c => {
-          menuText += `🔹 *${c.pattern}* — ${c.desc}\n`;
+          menuText += `- .${c.pattern} : ${c.desc}\n`;
         });
       }
 
-      menuText += `
-════════════════════════   
-🚀 Powered By  ${config.BOT_NAME || '*DANUKA DISANAYAKA* 🔥'}
-`;
-
-      await danuwa.sendMessage(
-        from,
-        {
-          image: {
-            url: config.ALIVE_IMG || "https://github.com/DANUWA-MD/DANUWA-BOT/blob/main/images/Danuwa%20-%20MD.png?raw=true",
-          },
-          caption: heading + menuText
-        },
-        { quoted: mek }
-      );
+      await reply(menuText.trim());
     } catch (err) {
       console.error(err);
       reply("❌ Error generating menu.");
