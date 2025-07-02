@@ -19,12 +19,12 @@ cmd({
     category: "main",
     filename: __filename
 },
-async (conn, mek, m, {
+async (danuwa, mek, m, {
     from, quoted, reply
 }) => {
     try {
         const start = Date.now();
-        await conn.sendPresenceUpdate('composing', from);
+        await danuwa.sendPresenceUpdate('composing', from);
         const ping = Date.now() - start;
         const uptime = formatUptime(process.uptime());
         const platform = os.platform();
@@ -49,7 +49,7 @@ async (conn, mek, m, {
 ⚙️ Made with ❤️ by
 ╰🔥 𝘿𝘼𝙉𝙐𝙆𝘼 𝘿𝙄𝙎𝘼𝙉𝘼𝙔𝘼𝙆𝘼 🔥`;
 
-        await conn.sendMessage(from, {
+        await danuwa.sendMessage(from, {
             image: { url: aliveImg },
             caption: aliveCaption,
             contextInfo: {
@@ -64,7 +64,7 @@ async (conn, mek, m, {
         }, { quoted: mek });
 
         if (fs.existsSync(voicePath)) {
-            await conn.sendMessage(from, {
+            await danuwa.sendMessage(from, {
                 audio: fs.readFileSync(voicePath),
                 mimetype: 'audio/ogg; codecs=opus',
                 ptt: true
